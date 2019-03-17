@@ -1,0 +1,25 @@
+<?php
+    # Simple select statement followed by fetch()
+    # 1) prepare an SQL query statement with ? placeholders
+    # 2) execute the query with the values we want to look up
+    # 3) fetch the resulting row
+    
+    // get into habit of writing sql string in a separate line to make it easier to read
+    $sql = "SELECT * FROM table_users WHERE user_name=? AND user_email=?";
+    
+    $rs = $pdo->prepare( $sql );
+    
+    // remember execute() expects an array of values - hence []
+    $rs->execute([$str_user_name, $str_user_email]);
+    
+    // we only want one value so use a simple 'if' 
+    if ($row = $rs->fetch())
+    {
+      $str_address = $row["user_address"];
+      $str_telephone = $row["user_telephone"];
+    }
+    else
+    {
+      echo "No match was found.";
+    }
+?>
